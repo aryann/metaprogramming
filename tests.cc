@@ -1,5 +1,6 @@
 #include "mp_list.h"
 #include "mp_rename.h"
+#include "mp_size.h"
 
 #include <string>
 #include <tuple>
@@ -7,6 +8,10 @@
 #include <utility>
 
 namespace mp {
+
+// ----------------------------------------------------------------------------
+// mp_rename:
+// ----------------------------------------------------------------------------
 
 static_assert(std::is_same_v<mp_rename<std::tuple<int, bool>, mp_list>,
                              mp_list<int, bool>>);
@@ -29,6 +34,25 @@ static_assert(std::is_same_v<mp_rename<std::pair<int, bool>, mp_list>,
 static_assert(std::is_same_v<
               mp_rename<mp_rename<std::tuple<int, bool>, mp_list>, std::tuple>,
               std::tuple<int, bool>>);
+
+// ----------------------------------------------------------------------------
+// mp_size:
+// ----------------------------------------------------------------------------
+
+template <std::size_t Size>
+using SizeIs = std::integral_constant<std::size_t, Size>;
+
+static_assert(std::is_same_v<mp_size<mp_list<>>, SizeIs<0>>);
+
+static_assert(std::is_same_v<mp_size<mp_list<int>>, SizeIs<1>>);
+
+static_assert(std::is_same_v<mp_size<mp_list<int, bool>>, SizeIs<2>>);
+
+static_assert(std::is_same_v<mp_size<mp_list<int, bool, bool>>, SizeIs<3>>);
+
+static_assert(
+    std::is_same_v<mp_size<mp_rename<std::tuple<int, bool, bool>, mp_list>>,
+                   SizeIs<3>>);
 
 } // namespace mp
 

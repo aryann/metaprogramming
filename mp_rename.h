@@ -4,22 +4,21 @@
 #include <type_traits>
 
 namespace mp {
-
 namespace detail {
 
 template <class OldType, template <class...> class NewContainer>
-struct mp_rename_impl;
+struct mp_rename;
 
 template <template <class...> class OldContainer, class... Args,
           template <class...> class NewContainer>
-struct mp_rename_impl<OldContainer<Args...>, NewContainer> {
-  using result = NewContainer<Args...>;
+struct mp_rename<OldContainer<Args...>, NewContainer> {
+  using value = NewContainer<Args...>;
 };
 
 } // namespace detail
 
 template <class OldType, template <class...> class NewContainer>
-using mp_rename = detail::mp_rename_impl<OldType, NewContainer>::result;
+using mp_rename = detail::mp_rename<OldType, NewContainer>::value;
 
 } // namespace mp
 

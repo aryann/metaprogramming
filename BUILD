@@ -19,11 +19,21 @@ cc_library(
     deps = [],
 )
 
+cc_library(
+    name = "mp_size",
+    srcs = [],
+    hdrs = [
+        "mp_size.h",
+    ],
+    deps = [],
+)
+
 cc_binary(
     name = "tests",
     srcs = ["tests.cc"],
     deps = [
         ":mp_list",
         ":mp_rename",
+        ":mp_size",
     ],
 )
