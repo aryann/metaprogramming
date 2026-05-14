@@ -11,6 +11,15 @@ cc_library(
 )
 
 cc_library(
+    name = "mp_push_front",
+    srcs = [],
+    hdrs = [
+        "mp_push_front.h",
+    ],
+    deps = [],
+)
+
+cc_library(
     name = "mp_rename",
     srcs = [],
     hdrs = [
@@ -33,6 +42,7 @@ cc_binary(
     srcs = ["tests.cc"],
     deps = [
         ":mp_list",
+        ":mp_push_front",
         ":mp_rename",
         ":mp_size",
     ],

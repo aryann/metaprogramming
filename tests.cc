@@ -1,4 +1,5 @@
 #include "mp_list.h"
+#include "mp_push_front.h"
 #include "mp_rename.h"
 #include "mp_size.h"
 
@@ -8,6 +9,19 @@
 #include <utility>
 
 namespace mp {
+
+// ----------------------------------------------------------------------------
+// mp_push_front:
+// ----------------------------------------------------------------------------
+
+static_assert(std::is_same_v<mp_push_front<mp_list<>, int>, mp_list<int>>);
+
+static_assert(
+    std::is_same_v<mp_push_front<mp_list<int>, bool>, mp_list<bool, int>>);
+
+static_assert(
+    std::is_same_v<mp_push_front<std::tuple<std::string, int, int>, bool>,
+                   std::tuple<bool, std::string, int, int>>);
 
 // ----------------------------------------------------------------------------
 // mp_rename:
