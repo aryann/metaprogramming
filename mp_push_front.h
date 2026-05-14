@@ -6,17 +6,17 @@
 namespace mp {
 namespace detail {
 
-template <class List, class Element> struct mp_push_front;
+template <class List, class... New> struct mp_push_front;
 
-template <template <class...> class Container, class... Args, class Element>
-struct mp_push_front<Container<Args...>, Element> {
-  using value = Container<Element, Args...>;
+template <template <class...> class Container, class... Existing, class... New>
+struct mp_push_front<Container<Existing...>, New...> {
+  using value = Container<New..., Existing...>;
 };
 
 } // namespace detail
 
-template <class List, class Element>
-using mp_push_front = detail::mp_push_front<List, Element>::value;
+template <class List, class... New>
+using mp_push_front = detail::mp_push_front<List, New...>::value;
 
 } // namespace mp
 

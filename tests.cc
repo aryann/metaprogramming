@@ -17,11 +17,18 @@ namespace mp {
 static_assert(std::is_same_v<mp_push_front<mp_list<>, int>, mp_list<int>>);
 
 static_assert(
+    std::is_same_v<mp_push_front<mp_list<>, int, bool>, mp_list<int, bool>>);
+
+static_assert(
     std::is_same_v<mp_push_front<mp_list<int>, bool>, mp_list<bool, int>>);
 
 static_assert(
     std::is_same_v<mp_push_front<std::tuple<std::string, int, int>, bool>,
                    std::tuple<bool, std::string, int, int>>);
+
+static_assert(
+    std::is_same_v<mp_push_front<std::tuple<std::string, int, int>, bool, int>,
+                   std::tuple<bool, int, std::string, int, int>>);
 
 // ----------------------------------------------------------------------------
 // mp_rename:
