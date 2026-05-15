@@ -92,31 +92,27 @@ static_assert(
 static_assert(
     std::is_same_v<mp_transform<add_pointer, mp_list<int>>, mp_list<int *>>);
 
-// ----------------------------------------------------------------------------
-// mp_transform2:
-// ----------------------------------------------------------------------------
+static_assert(
+    std::is_same_v<mp_transform<std::pair, mp_list<>, mp_list<>>, mp_list<>>);
 
 static_assert(
-    std::is_same_v<mp_transform2<std::pair, mp_list<>, mp_list<>>, mp_list<>>);
-
-static_assert(
-    std::is_same_v<mp_transform2<std::pair, mp_list<int>, mp_list<bool>>,
+    std::is_same_v<mp_transform<std::pair, mp_list<int>, mp_list<bool>>,
                    mp_list<std::pair<int, bool>>>);
 
 static_assert(
-    std::is_same_v<mp_transform2<std::pair, mp_list<int, std::string>,
-                                 mp_list<bool, std::string_view>>,
+    std::is_same_v<mp_transform<std::pair, mp_list<int, std::string>,
+                                mp_list<bool, std::string_view>>,
                    mp_list<std::pair<int, bool>,
                            std::pair<std::string, std::string_view>>>);
 
 static_assert(
-    std::is_same_v<mp_transform2<std::pair, std::tuple<int, int, bool>,
-                                 std::tuple<int, bool, int>>,
+    std::is_same_v<mp_transform<std::pair, std::tuple<int, int, bool>,
+                                std::tuple<int, bool, int>>,
                    std::tuple<std::pair<int, int>, std::pair<int, bool>,
                               std::pair<bool, int>>>);
 
-static_assert(std::is_same_v<mp_transform2<mp_list, std::tuple<int, int, bool>,
-                                           std::tuple<int, bool, int>>,
+static_assert(std::is_same_v<mp_transform<mp_list, std::tuple<int, int, bool>,
+                                          std::tuple<int, bool, int>>,
                              std::tuple<mp_list<int, int>, mp_list<int, bool>,
                                         mp_list<bool, int>>>);
 
