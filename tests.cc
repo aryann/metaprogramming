@@ -96,26 +96,29 @@ static_assert(
 // mp_transform2:
 // ----------------------------------------------------------------------------
 
-template <class T, class U> using combine = std::pair<T, U>;
+static_assert(
+    std::is_same_v<mp_transform2<std::pair, mp_list<>, mp_list<>>, mp_list<>>);
 
 static_assert(
-    std::is_same_v<mp_transform2<combine, mp_list<>, mp_list<>>, mp_list<>>);
-
-static_assert(
-    std::is_same_v<mp_transform2<combine, mp_list<int>, mp_list<bool>>,
+    std::is_same_v<mp_transform2<std::pair, mp_list<int>, mp_list<bool>>,
                    mp_list<std::pair<int, bool>>>);
 
 static_assert(
-    std::is_same_v<mp_transform2<combine, mp_list<int, std::string>,
+    std::is_same_v<mp_transform2<std::pair, mp_list<int, std::string>,
                                  mp_list<bool, std::string_view>>,
                    mp_list<std::pair<int, bool>,
                            std::pair<std::string, std::string_view>>>);
 
 static_assert(
-    std::is_same_v<mp_transform2<combine, std::tuple<int, int, bool>,
+    std::is_same_v<mp_transform2<std::pair, std::tuple<int, int, bool>,
                                  std::tuple<int, bool, int>>,
                    std::tuple<std::pair<int, int>, std::pair<int, bool>,
                               std::pair<bool, int>>>);
+
+static_assert(std::is_same_v<mp_transform2<mp_list, std::tuple<int, int, bool>,
+                                           std::tuple<int, bool, int>>,
+                             std::tuple<mp_list<int, int>, mp_list<int, bool>,
+                                        mp_list<bool, int>>>);
 
 } // namespace mp
 
