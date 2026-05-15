@@ -5,6 +5,7 @@
 #include "mp_transform.h"
 
 #include <string>
+#include <string_view>
 #include <tuple>
 #include <type_traits>
 #include <utility>
@@ -90,6 +91,31 @@ static_assert(
 
 static_assert(
     std::is_same_v<mp_transform<add_pointer, mp_list<int>>, mp_list<int *>>);
+
+// ----------------------------------------------------------------------------
+// mp_transform2:
+// ----------------------------------------------------------------------------
+
+template <class T, class U> using combine = std::pair<T, U>;
+
+static_assert(
+    std::is_same_v<mp_transform2<combine, mp_list<>, mp_list<>>, mp_list<>>);
+
+static_assert(
+    std::is_same_v<mp_transform2<combine, mp_list<int>, mp_list<bool>>,
+                   mp_list<std::pair<int, bool>>>);
+
+static_assert(
+    std::is_same_v<mp_transform2<combine, mp_list<int, std::string>,
+                                 mp_list<bool, std::string_view>>,
+                   mp_list<std::pair<int, bool>,
+                           std::pair<std::string, std::string_view>>>);
+
+static_assert(
+    std::is_same_v<mp_transform2<combine, std::tuple<int, int, bool>,
+                                 std::tuple<int, bool, int>>,
+                   std::tuple<std::pair<int, int>, std::pair<int, bool>,
+                              std::pair<bool, int>>>);
 
 } // namespace mp
 
