@@ -5,6 +5,8 @@ cc_library(
     name = "mp",
     srcs = [],
     hdrs = [
+        "mp_bool.h",
+        "mp_count.h",
         "mp_list.h",
         "mp_plus.h",
         "mp_push_front.h",

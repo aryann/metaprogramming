@@ -1,3 +1,5 @@
+#include "mp_bool.h"
+#include "mp_count.h"
 #include "mp_list.h"
 #include "mp_plus.h"
 #include "mp_push_front.h"
@@ -13,24 +15,67 @@
 
 namespace mp {
 
+template <int N> using int_c = std::integral_constant<int, N>;
+
+// ----------------------------------------------------------------------------
+// mp_count:
+// ----------------------------------------------------------------------------
+
+static_assert(std::is_same_v<mp_count<mp_list<>, int>, int_c<0>>);
+
+static_assert(std::is_same_v<mp_count<mp_list<int>, int>, int_c<1>>);
+
+static_assert(std::is_same_v<mp_count<mp_list<int, bool>, int>, int_c<1>>);
+
+static_assert(std::is_same_v<mp_count<mp_list<int, bool, int, int, bool>, int>,
+                             int_c<3>>);
+
+static_assert(std::is_same_v<mp_count<mp_list<int, bool, int, int, bool>, bool>,
+                             int_c<2>>);
+
+// ----------------------------------------------------------------------------
+// mp_count_if:
+// ----------------------------------------------------------------------------
+
+template <class N> using is_positive = mp_bool<(N::value > 0)>;
+template <class N> using is_even = mp_bool<(N::value % 2 == 0)>;
+template <class N> using is_zero = mp_bool<(N::value == 0)>;
+
+static_assert(
+    std::is_same_v<mp_count_if<mp_list<>, std::is_integral>, int_c<0>>);
+static_assert(
+    std::is_same_v<mp_count_if<mp_list<>, std::is_pointer>, int_c<0>>);
+static_assert(std::is_same_v<mp_count_if<mp_list<>, is_positive>, int_c<0>>);
+
+static_assert(
+    std::is_same_v<
+        mp_count_if<mp_list<int_c<-1>, int_c<0>, int_c<1>, int_c<2>, int_c<3>>,
+                    is_positive>,
+        int_c<3>>);
+
+static_assert(
+    std::is_same_v<
+        mp_count_if<mp_list<int_c<-1>, int_c<0>, int_c<1>, int_c<2>, int_c<3>>,
+                    is_even>,
+        int_c<2>>);
+
+static_assert(
+    std::is_same_v<
+        mp_count_if<mp_list<int_c<-1>, int_c<0>, int_c<1>, int_c<2>, int_c<3>>,
+                    is_zero>,
+        int_c<1>>);
+
 // ----------------------------------------------------------------------------
 // mp_plus:
 // ----------------------------------------------------------------------------
 
-static_assert(std::is_same_v<mp_plus<>, std::integral_constant<int, 0>>);
+static_assert(std::is_same_v<mp_plus<>, int_c<0>>);
 
-static_assert(std::is_same_v<mp_plus<std::integral_constant<int, 1>>,
-                             std::integral_constant<int, 1>>);
+static_assert(std::is_same_v<mp_plus<int_c<1>>, int_c<1>>);
 
-static_assert(std::is_same_v<mp_plus<std::integral_constant<int, 1>,
-                                     std::integral_constant<int, 1>,
-                                     std::integral_constant<int, 1>>,
-                             std::integral_constant<int, 3>>);
+static_assert(std::is_same_v<mp_plus<int_c<1>, int_c<1>, int_c<1>>, int_c<3>>);
 
-static_assert(std::is_same_v<mp_plus<std::integral_constant<int, 1>,
-                                     std::integral_constant<int, 2>,
-                                     std::integral_constant<int, 3>>,
-                             std::integral_constant<int, 6>>);
+static_assert(std::is_same_v<mp_plus<int_c<1>, int_c<2>, int_c<3>>, int_c<6>>);
 
 // ----------------------------------------------------------------------------
 // mp_push_front:
