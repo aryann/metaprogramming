@@ -6,6 +6,7 @@ cc_library(
     srcs = [],
     hdrs = [
         "mp_list.h",
+        "mp_plus.h",
         "mp_push_front.h",
         "mp_rename.h",
         "mp_size.h",

@@ -1,4 +1,5 @@
 #include "mp_list.h"
+#include "mp_plus.h"
 #include "mp_push_front.h"
 #include "mp_rename.h"
 #include "mp_size.h"
@@ -11,6 +12,25 @@
 #include <utility>
 
 namespace mp {
+
+// ----------------------------------------------------------------------------
+// mp_plus:
+// ----------------------------------------------------------------------------
+
+static_assert(std::is_same_v<mp_plus<>, std::integral_constant<int, 0>>);
+
+static_assert(std::is_same_v<mp_plus<std::integral_constant<int, 1>>,
+                             std::integral_constant<int, 1>>);
+
+static_assert(std::is_same_v<mp_plus<std::integral_constant<int, 1>,
+                                     std::integral_constant<int, 1>,
+                                     std::integral_constant<int, 1>>,
+                             std::integral_constant<int, 3>>);
+
+static_assert(std::is_same_v<mp_plus<std::integral_constant<int, 1>,
+                                     std::integral_constant<int, 2>,
+                                     std::integral_constant<int, 3>>,
+                             std::integral_constant<int, 6>>);
 
 // ----------------------------------------------------------------------------
 // mp_push_front:
